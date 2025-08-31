@@ -9,7 +9,10 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
-import userRoutes from "../Backend/myapp/domains/users/routes/user.route.js"; 
+import userRoutes from "../Backend/myapp/domains/users/routes/user.route.js";
+import blogRoutes from "../Backend/myapp/domains/blogs/routes/blog.route.js";
+import commentRoutes from "../Backend/myapp/domains/comments/routes/comment.route.js";
+import likeRoutes from "../Backend/myapp/domains/likes/routes/likes.route.js";
 import connectDB from "./config/db.config.js";
 
 const app = express();
@@ -27,9 +30,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Routes for server prefix
 app.use("/api/users",  userRoutes)
-// app.use("api/blogs",  blogRoutes)
-// app.use("api/comments", commentRoutes)
-// app.use("api/likes", likeRoutes)
+app.use("/api/blogs",  blogRoutes)
+app.use("/api/comments", commentRoutes)
+app.use("/api/likes", likeRoutes)
 
 
 // catch 404 and forward to error handler

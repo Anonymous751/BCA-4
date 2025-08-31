@@ -46,6 +46,9 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    otpResendCount: { type: Number, default: 0 },
+    otpResendLast: { type: Date, default: null },
+    isBlocked: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
