@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import { Suspense, lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "./layouts/Main.layout.jsx";
 import Loader from "./sharedComponents/Loader.component.jsx";
@@ -13,6 +13,15 @@ import AdminDashboardLayout from "./layouts/AdminDashboard.layout.jsx";
 import AuthorDashboardLayout from "./layouts/AuthorDashboard.layout.jsx";
 import ReaderDashboardLayout from "./layouts/ReaderDashboard.layout.jsx";
 import "./App.css";
+// import Profile from "./features/users/components/Profile.component.jsx";
+import CreateBlogPage from "./features/blogs/pages/CreateBlog.page.jsx";
+import GenerateOtpPage from "./features/users/pages/GenerateOtoPage.jsx";
+import ResetPasswordPage from "./features/users/pages/ResetPassword.page.jsx";
+import AdminProfile from "./features/admin/components/AdminProfile.component.jsx";
+import DashChangePassword from "./features/users/pages/DashChangePassword.pages.jsx";
+import AllUsers from "./sharedComponents/AllUsers.component.jsx";
+import ProtectedRoute from "./sharedComponents/ProtectedRoute.component.jsx";
+
 // Lazy-loaded pages
 const BlogListPage = lazy(() =>
   import("./features/blogs/pages/BlogList.page.jsx")
@@ -28,6 +37,15 @@ const DashboardPage = lazy(() =>
   import("./features/admin/pages/Dashboard.page.jsx")
 );
 
+import { AuthProvider } from "./context/auth.context";
+import UpdateBlogPage from "./features/blogs/pages/UpdateBlog.page.jsx";
+import AdminSettings from "./features/admin/pages/AdminSettings.page.jsx";
+import UpdateProfile from "./features/admin/components/UpdatePeofile.component.jsx";
+import UserDetails from "./sharedComponents/UserDetail.component.jsx";
+import UpdateUser from "./sharedComponents/UpdateUser.component.jsx";
+import AdminDashboard from "./features/admin/components/AdminDashboard.component.jsx"
+
+const userRole = localStorage.getItem("userRole"); 
 const router = createBrowserRouter([
   {
     path: "/",
@@ -43,41 +61,97 @@ const router = createBrowserRouter([
       { path: "register", element: <RegisterPage /> },
       { path: "verify-otp", element: <VerifyOtpPage /> },
       { path: "forget-password", element: <ForgetPasswordPage /> },
+      // { path: "profile", element: <Profile /> },
+      
+      { path: "generate-otp", element: <GenerateOtpPage /> },
+      { path: "reset-password", element: <ResetPasswordPage /> },
+      
     ],
   },
   {
     path: "/admin",
-    element: <AdminDashboardLayout />,
+   element: (
+    // <ProtectedRoute allowedRoles={["Admin"]}>
+      <AdminDashboardLayout />
+    //  </ProtectedRoute>
+  ),
     children: [
-      { path: "users", element: <h1>Manage Users</h1> },
-      { path: "reports", element: <h1>Reports</h1> },
-      { path: "settings", element: <h1>Settings</h1> },
+        { path: "dashboard", element: <AdminDashboard /> },
+       { path: "users", element: <AllUsers /> },
+       { path: "users/:id", element: <UserDetails /> },
+      { path: "settings", element: <AdminSettings /> },
+      { path: "profile", element: <AdminProfile /> },
+      { path: "change-password", element: <DashChangePassword /> },
+      { path: "blogs", element: <BlogListPage /> },
+      {
+  path: "/admin/blogs/update/:id",
+  element: (
+    // <ProtectedRoute allowedRoles={["Author"]}>
+      <UpdateBlogPage />
+    // </ProtectedRoute>
+  ),
+},
+{
+  path: "users/update/:id",
+  element: <UpdateUser />,
+},
+{
+  path: "update-profile",
+  element: (
+    // Optional: wrap in <ProtectedRoute allowedRoles={["Admin"]}>
+    <UpdateProfile />
+  ),
+}
+  
     ],
   },
   {
     path: "/author",
-    element: <AuthorDashboardLayout />,
+    element: (
+    // <ProtectedRoute allowedRoles={["Author"]}>
+      <AuthorDashboardLayout />
+  //  </ProtectedRoute>
+  ),
     children: [
-      { path: "blogs", element: <h1>My Blogs</h1> },
-      { path: "write", element: <h1>Write Blog</h1> },
+      { path: "create-blog", element: <CreateBlogPage /> },
       { path: "stats", element: <h1>Blog Stats</h1> },
+      { path: "profile", element: <AdminProfile /> },
+      { path: "change-password", element: <DashChangePassword /> },
+      { path: "blogs", element: <BlogListPage /> },
+      {
+  path: "/author/blogs/update/:id",
+  element: (
+    // <ProtectedRoute allowedRoles={["Admin"]}>
+      <UpdateBlogPage />
+    // </ProtectedRoute>
+  ),
+}
     ],
   },
   {
     path: "/reader",
-    element: <ReaderDashboardLayout />,
+     element: (
+    // <ProtectedRoute allowedRoles={["Reader"]}>
+      <ReaderDashboardLayout />
+    //  </ProtectedRoute>
+  ),
     children: [
       { path: "explore", element: <h1>Explore Blogs</h1> },
       { path: "favorites", element: <h1>Favorites</h1> },
       { path: "notifications", element: <h1>Notifications</h1> },
+      { path: "profile", element: <AdminProfile /> },
+      { path: "change-password", element: <DashChangePassword /> },
+      { path: "blogs", element: <BlogListPage /> },
     ],
   },
 ]);
 
 export default function App() {
   return (
-    <Suspense fallback={<Loader />}>
-      <RouterProvider router={router} />
-    </Suspense>
+    <AuthProvider>
+      <Suspense fallback={<Loader />}>
+        <RouterProvider router={router} />
+      </Suspense>
+    </AuthProvider>
   );
 }

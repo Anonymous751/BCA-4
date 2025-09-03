@@ -3,27 +3,46 @@ import User from "../myapp/domains/users/models/user.model.js";
 
 export const requireAuth = async (req, res, next) => {
   try {
-    const token =
-      req.cookies?.[process.env.COOKIE_NAME || "token"] ||
-      (req.headers.authorization?.startsWith("Bearer ")
-        ? req.headers.authorization.split(" ")[1]
-        : null);
+    const authHeader = req.headers.authorization;
+    console.log("🔹 Incoming Authorization header:", authHeader);
 
-    if (!token) {
+    if (!authHeader?.startsWith("Bearer ")) {
+      console.log("❌ Missing or malformed Authorization header");
       return res.status(401).json({ error: "Unauthorized. Token missing" });
     }
 
-    const payload = verifyToken(token); // { id, roles }
+    const token = authHeader.split(" ")[1];
+    console.log("🔹 Extracted token:", token);
 
-    // 🔍 Fetch full user from DB
+    let payload;
+    try {
+      payload = verifyToken(token);
+      console.log("✅ Decoded payload:", payload);
+    } catch (err) {
+      console.error("❌ Token verification failed:", err.message);
+      return res.status(401).json({ error: "Unauthorized. Invalid or expired token" });
+    }
+
     const user = await User.findById(payload.id).select("-password");
+    console.log("🔹 User found in DB:", user);
+
     if (!user) {
+      console.log("❌ No user found with id:", payload.id);
       return res.status(401).json({ error: "Unauthorized. User not found" });
     }
 
-    req.user = user; // ✅ now contains full Mongo user with _id
+    req.user = user;
     next();
   } catch (err) {
+    console.error("❌ General auth error:", err.message);
     return res.status(401).json({ error: "Unauthorized. Invalid or expired token" });
   }
+};
+
+
+export const requireAdmin = (req, res, next) => {
+  if (!req.user || req.user.roles?.includes("admin") === false) {
+    return res.status(403).json({ message: "Access denied. Admins only." });
+  }
+  next();
 };

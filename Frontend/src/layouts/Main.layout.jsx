@@ -2,6 +2,7 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../sharedComponents/Navbar.component.jsx";
 import Footer from "../sharedComponents/Footer.component.jsx";
+import Hero from "../sharedComponents/Hero.component.jsx";
 
 export default function MainLayout() {
   return (

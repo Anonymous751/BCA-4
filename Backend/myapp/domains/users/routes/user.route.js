@@ -1,22 +1,42 @@
 import express from "express";
 import UserController from "../controllers/user.controller.js";
-import { requireAuth } from "../../../../middlewares/auth.middlewares.js";
-const router = express.Router();
-console.log(UserController);
+import { requireAdmin, requireAuth } from "../../../../middlewares/auth.middlewares.js";
+import upload from "../../../../config/multer.config.js";
+import { getAvatar } from "../../../../routes/file.controller.js";
+import { getCoverImage } from "../../../../routes/blog.controller.js";
 
+const router = express.Router();
+
+// =======================
+// USER AUTH ROUTES
+// =======================
+router.post("/register", upload.single("avatar"), UserController.registerUser);
+router.post("/login", UserController.login);
+router.post("/logout", UserController.logout);
+router.post("/verify-otp", UserController.verifyOTP);
 router.post("/resend-otp", UserController.resendOTP);
-router.post("/change-password", requireAuth, UserController.changePassword);
 router.post("/request-password-reset", UserController.requestPasswordReset);
 router.post("/reset-password", UserController.resetPasswordWithOTP);
 
-router.post("/register", UserController.registerUser);
-router.post("/verify-otp", UserController.verifyOTP);
-router.post("/login", UserController.login);
-router.post("/logout", UserController.logout);
-
-router.put("/update-user-profile", requireAuth, UserController.updateProfile);
+// =======================
+// PROFILE ROUTES
+// =======================
+router.get("/logged-in-user-profile", requireAuth, UserController.getLoggedInUser);
+router.put("/update-user-profile", requireAuth, upload.single("avatar"), UserController.updateProfile);
 router.put("/update-user-roles", requireAuth, UserController.updateUserRoles);
 
+// =======================
+// DASHBOARD ROUTE (must be before dynamic :id)
+// =======================
+router.get("/dashboard", requireAuth, UserController.getDashboardStats);
+
+// =======================
+// STATIC & DYNAMIC USER ROUTES
+// =======================
 router.get("/all", UserController.getUsers);
-router.get("/logged-in-user-profile", requireAuth, UserController.getLoggedInUser);
+router.get("/avatar/:id", getAvatar);
+router.get("/:id", UserController.getUserById);
+router.put("/:id", requireAuth, UserController.updateUser);
+router.delete("/:id", requireAuth, UserController.deleteUser);
+
 export default router;

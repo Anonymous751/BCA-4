@@ -8,72 +8,63 @@ export default function ForgetPasswordPage() {
   const [showOld, setShowOld] = useState(false);
   const [showNew, setShowNew] = useState(false);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert("Password changed successfully!");
+  };
+
+  const inputClasses =
+    "peer w-full pl-10 pr-3 pt-5 pb-2 border-b-2 border-gray-300 focus:border-indigo-600 outline-none text-gray-700";
+  const labelClasses =
+    "absolute left-10 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:-top-1 peer-focus:text-xs peer-focus:text-indigo-600";
+
   return (
-    <div className="min-h-screen flex items-start justify-center bg-gradient-to-r from-indigo-600 to-purple-700 px-4 pt-32">
-      {/* pt-32 adds spacing from fixed navbar */}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-600 to-purple-700 px-4">
       <motion.div
-        initial={{ opacity: 0, y: -50 }}
+        initial={{ opacity: 0, y: -40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="bg-white shadow-2xl rounded-3xl p-10 w-full max-w-md hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
       >
-        <h2 className="text-4xl font-extrabold text-center text-indigo-700 mb-10 animate-pulse">
+        <h2 className="text-4xl font-extrabold text-center text-indigo-700 mb-8 animate-pulse">
           Forget Password
         </h2>
 
-        <form className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           {/* Old Password */}
           <div className="relative">
-            <div className="flex items-center rounded-lg px-3 py-2 bg-gray-100 transition-all duration-300 hover:bg-gray-200">
-              <FaLock className="text-gray-400 mr-3" />
-              <input
-                type={showOld ? "text" : "password"}
-                value={oldPassword}
-                onChange={(e) => setOldPassword(e.target.value)}
-                
-                className="w-full outline-none bg-transparent text-gray-700 pt-2 pb-1"
-              />
-              <span
-                className="ml-2 text-gray-400 cursor-pointer"
-                onClick={() => setShowOld(!showOld)}
-              >
-                {showOld ? <FaEyeSlash /> : <FaEye />}
-              </span>
-            </div>
-            <label
-              className={`absolute left-10 text-gray-400 text-sm pointer-events-none transition-all duration-300 ${
-                oldPassword ? "-translate-y-3 text-indigo-600 text-xs" : "top-2"
-              }`}
+            <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <input
+              type={showOld ? "text" : "password"}
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+              className={inputClasses}
+            />
+            <label className={labelClasses}>Old Password</label>
+            <span
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
+              onClick={() => setShowOld(!showOld)}
             >
-              Old Password
-            </label>
+              {showOld ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
 
           {/* New Password */}
           <div className="relative">
-            <div className="flex items-center rounded-lg px-3 py-2 bg-gray-100 transition-all duration-300 hover:bg-gray-200">
-              <FaLock className="text-gray-400 mr-3" />
-              <input
-                type={showNew ? "text" : "password"}
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-
-                className="w-full outline-none bg-transparent text-gray-700 pt-2 pb-1"
-              />
-              <span
-                className="ml-2 text-gray-400 cursor-pointer"
-                onClick={() => setShowNew(!showNew)}
-              >
-                {showNew ? <FaEyeSlash /> : <FaEye />}
-              </span>
-            </div>
-            <label
-              className={`absolute left-10 text-gray-400 text-sm pointer-events-none transition-all duration-300 ${
-                newPassword ? "-translate-y-3 text-indigo-600 text-xs" : "top-2"
-              }`}
+            <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <input
+              type={showNew ? "text" : "password"}
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className={inputClasses}
+            />
+            <label className={labelClasses}>New Password</label>
+            <span
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
+              onClick={() => setShowNew(!showNew)}
             >
-              New Password
-            </label>
+              {showNew ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
 
           {/* Submit Button */}
@@ -89,6 +80,16 @@ export default function ForgetPasswordPage() {
             <span>Submit</span>
           </motion.button>
         </form>
+
+        <p className="text-sm text-gray-500 text-center mt-6">
+          Remember your password?{" "}
+          <a
+            href="/login"
+            className="text-indigo-600 font-semibold cursor-pointer hover:underline transition-all"
+          >
+            Login
+          </a>
+        </p>
       </motion.div>
     </div>
   );

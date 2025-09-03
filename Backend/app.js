@@ -13,7 +13,9 @@ import userRoutes from "../Backend/myapp/domains/users/routes/user.route.js";
 import blogRoutes from "../Backend/myapp/domains/blogs/routes/blog.route.js";
 import commentRoutes from "../Backend/myapp/domains/comments/routes/comment.route.js";
 import likeRoutes from "../Backend/myapp/domains/likes/routes/likes.route.js";
-import connectDB from "./config/db.config.js";
+import {connectDB} from "./config/db.config.js";
+import fileRoutes from "./routes/file.route.js";
+
 
 const app = express();
 
@@ -21,7 +23,10 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 connectDB()
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173", // frontend URL
+  credentials: true,               // allow cookies
+}));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -33,8 +38,7 @@ app.use("/api/users",  userRoutes)
 app.use("/api/blogs",  blogRoutes)
 app.use("/api/comments", commentRoutes)
 app.use("/api/likes", likeRoutes)
-
-
+app.use("/api/files", fileRoutes);
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));

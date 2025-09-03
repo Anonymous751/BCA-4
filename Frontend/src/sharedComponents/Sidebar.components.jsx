@@ -1,8 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { menuConfig } from "../utils/menu.config";
+import { useState } from "react";
+import ChangePasswordModal from "../components/ChangePasswordModal";
 
 export default function Sidebar({ role }) {
   const links = menuConfig[role] || [];
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <aside className="w-64 bg-white dark:bg-gray-900 shadow-md h-full p-4 flex flex-col justify-between">
@@ -24,6 +27,22 @@ export default function Sidebar({ role }) {
           ))}
         </nav>
       </div>
+
+      {/* 🔹 Change Password Button */}
+      <div className="mt-6">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="w-full bg-blue-600 text-white py-2 px-3 rounded hover:bg-blue-700"
+        >
+          Change Password
+        </button>
+      </div>
+
+      {/* 🔹 Modal */}
+      <ChangePasswordModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </aside>
   );
 }

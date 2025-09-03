@@ -9,45 +9,35 @@ import { sendOTPEmail } from "../../../../helpers/email.helper.js";
 
 class UserService {
   // Register User
-  static async registerUserService({
+static async registerUserService({ username, email, password, roles = ["Reader"], avatar = null }) {
+  const existingUser = await User.findOne({ email });
+  if (existingUser) throw new Error("User already exists with this email");
+
+  const hashedPassword = await hashPassword(password);
+  const otp = generateOTP();
+
+  const user = await User.create({
     username,
     email,
-    password,
-    roles = ["Reader"],
-    avatar = null,
-  }) {
-    const existingUser = await User.findOne({ email });
-    if (existingUser) throw new Error("User already exists with this email");
+    password: hashedPassword,
+    roles,
+    avatar,   // 👈 stores GridFS ObjectId
+    otp,
+    otpResendCount: 0,
+    isBlocked: false,
+  });
 
-    const hashedPassword = await hashPassword(password);
-    const otp = generateOTP();
+  return {
+    id: user._id,
+    username: user.username,
+    email: user.email,
+    roles: user.roles,
+    avatar: user.avatar, // GridFS ObjectId
+    otp,
+  };
+}
 
-    const user = await User.create({
-      username,
-      email,
-      password: hashedPassword,
-      roles,
-      avatar,
-      otp,
-      otpResendCount: 0, // initialize resend count
-      isBlocked: false, // initialize block flag
-    });
 
-    return {
-      id: user._id,
-      username: user.username,
-      email: user.email,
-      roles: user.roles,
-      avatar: user.avatar,
-      otp,
-    };
-  }
-
-  // Get All Users
-  static async getAllUsersService() {
-    const users = await User.find().select("-password -otp");
-    return users;
-  }
 
   // Verify OTP
   static async verifyOTPService({ email, otp }) {
@@ -90,6 +80,34 @@ class UserService {
       },
     };
   }
+
+
+// Get all user ?
+static async getAllUsersService() {
+  const users = await User.find().select("-password -otp");
+  return users;
+}
+
+// Get User use Id 
+static getUserByIdService = async (id) => {
+  return await User.findById(id).select("-password"); // exclude password
+};
+
+// Update User
+static async updateUser(userId, data) {
+    const updatedUser = await User.findByIdAndUpdate(userId, data, {
+      new: true, // return updated doc
+      runValidators: true,
+    });
+    return updatedUser;
+  }
+
+  // Delete user
+  static async deleteUser(userId) {
+    return await User.findByIdAndDelete(userId);
+  }
+
+
 
   // Logout User
   static async logoutService() {
@@ -194,39 +212,19 @@ class UserService {
   }
 
   // User profile update
-static async updateProfileService(userId, updateData) {
+// Update Profile Service
+static async updateProfileService({ userId, updateData, requesterRoles }) {
+  console.log("🔧 updateProfileService called →", { userId, updateData, requesterRoles });
+
+  // ✅ userId will now be a proper string
   const user = await User.findById(userId);
   if (!user) throw new Error("User not found");
 
-  // Allowed fields for everyone
-  const allowedFields = ["username", "avatar", "email", "password"];
-
-  // Update safe fields
-  for (const field of allowedFields) {
-    if (updateData[field] !== undefined) {
-      if (field === "password") {
-        user.password = await hashPassword(updateData.password); // hash new password
-      } else {
-        user[field] = updateData[field];
-      }
-    }
-  }
-
-  // Update roles only if user is Admin
-  if (updateData.roles && req.user.roles.includes("Admin")) {
-    user.roles = updateData.roles;
-  }
-
+  // update fields
+  Object.assign(user, updateData);
   await user.save();
 
-  return {
-    id: user._id,
-    username: user.username,
-    email: user.email,
-    avatar: user.avatar,
-    roles: user.roles,
-    isVerified: user.isVerified,
-  };
+  return user.toObject();
 }
 
 // Admin-only: Update roles of any user

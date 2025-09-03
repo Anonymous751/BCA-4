@@ -8,5 +8,8 @@ export const signToken = (payload, options = {}) => {
 };
 
 export const verifyToken = (token) => {
+  if (!token || token.trim() === "") {
+    throw new Error("Token missing");
+  }
   return jwt.verify(token, process.env.JWT_SECRET);
 };
