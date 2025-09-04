@@ -7,16 +7,27 @@ export const menuConfig = {
     { name: "Register", path: "/register" },
   ],
   Reader: [ // Explore Blogs / Favourites / Notiofications  / Profile / Change Password 
+<<<<<<< HEAD
      { name: " Explore Blogs", path: "/blogs" },
      { name: " Favourites", path: "----" },
+=======
+     { name: " Explore Blogs", path: "/reader/blogs" },
+     { name: " Favourites", path: "/reader/favourites" },
+>>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
      { name: "Notifications", path: "-----" },
     { name: "Settings", path: "" },
     { name: "Profile", path: "profile" },
   ],
   Author: [ // dashboard, create blog / my blogs / profile/ change-password / blog stats 
+<<<<<<< HEAD
     { name: "Dashboard", path: "/author" },
     { name: "Create Blog", path: "/author/create-blog" },
      { name: "My Blogs", path: "/blogs" },
+=======
+    { name: "Dashboard", path: "/author/author-dashboard" },
+    { name: "Create Blog", path: "/author/create-blog" },
+     { name: "My Blogs", path: "/blogs/my-blog" },
+>>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
      { name: "Blog Stats", path: "----" },
     { name: "Profile", path: "profile" },
   ],

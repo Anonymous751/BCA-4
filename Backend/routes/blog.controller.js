@@ -2,6 +2,7 @@
 import mongoose from "mongoose";
 import { getGFS } from "../config/db.config.js";
 
+<<<<<<< HEAD
 export const getCoverImage = async (req, res) => {
   try {
     const gfsBucket = getGFS();
@@ -12,10 +13,44 @@ export const getCoverImage = async (req, res) => {
 
     const files = await gfsBucket.find({ _id }).toArray();
     if (!files || files.length === 0) {
+=======
+const getCoverImage = async (req, res) => {
+  try {
+    const gfsBucket = getGFS();
+    if (!gfsBucket) {
+      console.error("❌ GridFS not initialized");
+      return res.status(500).json({ error: "GridFS not initialized" });
+    }
+
+    const { id } = req.params;
+    console.log("📥 Requested cover ID:", id);
+
+    let _id;
+    try {
+      _id = new mongoose.Types.ObjectId(id);
+    } catch (err) {
+      console.error("❌ Invalid ObjectId:", id);
+      return res.status(400).json({ error: "Invalid file ID" });
+    }
+
+    let files;
+    try {
+      files = await gfsBucket.find({ _id }).toArray();
+    } catch (err) {
+      console.error("❌ Error querying GridFS:", err);
+      return res.status(500).json({ error: "Error querying GridFS" });
+    }
+
+    console.log("🔎 Files found:", files);
+
+    if (!files || files.length === 0) {
+      console.warn("⚠️ No file found for ID:", id);
+>>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
       return res.status(404).json({ error: "Cover image not found" });
     }
 
     const file = files[0];
+<<<<<<< HEAD
     res.set("Content-Type", file.contentType);
 
     const downloadStream = gfsBucket.openDownloadStream(_id);
@@ -25,3 +60,27 @@ export const getCoverImage = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+=======
+    console.log("✅ Serving file:", {
+      filename: file.filename,
+      contentType: file.contentType,
+      length: file.length,
+    });
+
+    res.set("Content-Type", file.contentType || "application/octet-stream");
+
+    const downloadStream = gfsBucket.openDownloadStream(_id);
+    downloadStream.on("error", (err) => {
+      console.error("❌ Error streaming file:", err);
+      res.status(500).json({ error: "Error streaming file" });
+    });
+
+    downloadStream.pipe(res);
+  } catch (err) {
+    console.error("❌ Unexpected error in getCoverImage:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export default getCoverImage;
+>>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)

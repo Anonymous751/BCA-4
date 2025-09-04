@@ -36,4 +36,11 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 });
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
 export default router;

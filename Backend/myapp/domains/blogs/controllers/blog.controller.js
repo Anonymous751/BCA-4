@@ -2,16 +2,22 @@ import BlogService from "../services/blog.services.js";
 
 class BlogController {
 
-  static async createBlog(req, res) {
-    try {
-      const data = { ...req.body, author: req.user.id };
-      const blog = await BlogService.createBlogService(data);
-      return res.status(201).json({ message: "Blog created successfully ✅", blog });
-    } catch (err) {
-      return res.status(400).json({ error: err.message });
-    }
-  }
+static async createBlog(req, res) {
+  try {
+    const data = {
+      ...req.body,
+      author: req.user.id,
+      tags: req.body.tags ? JSON.parse(req.body.tags) : [], // if tags come as JSON string
+      coverImage: req.file ? req.file.id : null,            // 👈 save file ID
+    };
+    console.log("FILE:", req.file);  
 
+    const blog = await BlogService.createBlogService(data);
+    return res.status(201).json({ message: "Blog created successfully ✅", blog });
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+}
   static async getAllBlogs(req, res) {
     try {
       const { page, limit, sortBy, tags } = req.query;
@@ -60,3 +66,4 @@ class BlogController {
 }
 
 export default BlogController;
+

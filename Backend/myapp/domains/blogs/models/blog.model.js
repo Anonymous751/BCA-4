@@ -14,8 +14,9 @@ const blogSchema = new mongoose.Schema(
       trim: true,
     },
     coverImage: {
-      type: String, // URL
-      trim: true,
+      type: mongoose.Schema.Types.ObjectId, // GridFS file id
+      ref: "uploads.files",
+      default: null,
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,
@@ -27,7 +28,7 @@ const blogSchema = new mongoose.Schema(
       default: [],
     },
   },
-  { timestamps: true } // automatically adds createdAt and updatedAt
+  { timestamps: true }
 );
 
 export default mongoose.model("Blog", blogSchema);

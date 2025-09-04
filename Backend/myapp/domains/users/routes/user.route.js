@@ -3,8 +3,13 @@ import UserController from "../controllers/user.controller.js";
 import { requireAdmin, requireAuth } from "../../../../middlewares/auth.middlewares.js";
 import upload from "../../../../config/multer.config.js";
 import { getAvatar } from "../../../../routes/file.controller.js";
+<<<<<<< HEAD
 import { getCoverImage } from "../../../../routes/blog.controller.js";
 
+=======
+
+
+>>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
 const router = express.Router();
 
 // =======================

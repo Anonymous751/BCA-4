@@ -40,6 +40,26 @@ export const requireAuth = async (req, res, next) => {
 };
 
 
+<<<<<<< HEAD
+=======
+export const requireRole = (allowedRoles = []) => {
+  return (req, res, next) => {
+    if (!req.user || !req.user.roles) {
+      return res.status(403).json({ error: "Forbidden. No roles found." });
+    }
+
+    const hasAccess = req.user.roles.some(role => allowedRoles.includes(role));
+
+    if (!hasAccess) {
+      return res.status(403).json({ error: "Forbidden. You don't have permission to access this route." });
+    }
+
+    next();
+  };
+};
+
+
+>>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
 export const requireAdmin = (req, res, next) => {
   if (!req.user || req.user.roles?.includes("admin") === false) {
     return res.status(403).json({ message: "Access denied. Admins only." });

@@ -1,3 +1,4 @@
+// Importing helper functions for password hashing, OTP generation, JWT signing, and email sending
 import {
   hashPassword,
   comparePassword,
@@ -9,6 +10,7 @@ import { sendOTPEmail } from "../../../../helpers/email.helper.js";
 
 class UserService {
   // Register User
+<<<<<<< HEAD
 static async registerUserService({ username, email, password, roles = ["Reader"], avatar = null }) {
   const existingUser = await User.findOne({ email });
   if (existingUser) throw new Error("User already exists with this email");
@@ -40,6 +42,40 @@ static async registerUserService({ username, email, password, roles = ["Reader"]
 
 
   // Verify OTP
+=======
+  static async registerUserService({ username, email, password, roles = ["Reader"], avatar = null }) {
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) throw new Error("User already exists with this email");
+
+    // Hash password and generate OTP
+    const hashedPassword = await hashPassword(password);
+    const otp = generateOTP();
+
+    // Create new user
+    const user = await User.create({
+      username,
+      email,
+      password: hashedPassword,
+      roles,
+      avatar,  // Store GridFS ObjectId for avatar
+      otp,
+      otpResendCount: 0,
+      isBlocked: false,
+    });
+
+    return {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      roles: user.roles,
+      avatar: user.avatar, // Store avatar (GridFS ObjectId)
+      otp,
+    };
+  }
+
+  // Verify OTP during user registration or reset
+>>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
   static async verifyOTPService({ email, otp }) {
     const user = await User.findOne({ email });
     if (!user) throw new Error("User not found");
@@ -52,7 +88,7 @@ static async registerUserService({ username, email, password, roles = ["Reader"]
     return user;
   }
 
-  // Login User
+  // User Login Service
   static async loginService({ email, password }) {
     const user = await User.findOne({ email });
     if (!user) throw new Error("Invalid credentials");
@@ -60,10 +96,8 @@ static async registerUserService({ username, email, password, roles = ["Reader"]
     const isMatch = await comparePassword(password, user.password);
     if (!isMatch) throw new Error("Invalid credentials");
 
-    if (!user.isVerified)
-      throw new Error("Please verify your email before logging in");
-    if (user.isBlocked)
-      throw new Error("Account blocked due to too many OTP requests");
+    if (!user.isVerified) throw new Error("Please verify your email before logging in");
+    if (user.isBlocked) throw new Error("Account blocked due to too many OTP requests");
 
     const token = signToken({ id: user._id, roles: user.roles });
 
@@ -81,6 +115,7 @@ static async registerUserService({ username, email, password, roles = ["Reader"]
     };
   }
 
+<<<<<<< HEAD
 
 // Get all user ?
 static async getAllUsersService() {
@@ -97,6 +132,23 @@ static getUserByIdService = async (id) => {
 static async updateUser(userId, data) {
     const updatedUser = await User.findByIdAndUpdate(userId, data, {
       new: true, // return updated doc
+=======
+  // Get all users
+  static async getAllUsersService() {
+    const users = await User.find().select("-password -otp"); // Exclude sensitive fields
+    return users;
+  }
+
+  // Get user by ID
+  static getUserByIdService = async (id) => {
+    return await User.findById(id).select("-password"); // Exclude password
+  };
+
+  // Update user information
+  static async updateUser(userId, data) {
+    const updatedUser = await User.findByIdAndUpdate(userId, data, {
+      new: true,  // Return updated document
+>>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
       runValidators: true,
     });
     return updatedUser;
@@ -107,14 +159,18 @@ static async updateUser(userId, data) {
     return await User.findByIdAndDelete(userId);
   }
 
+<<<<<<< HEAD
 
 
   // Logout User
+=======
+  // Logout User (remove token)
+>>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
   static async logoutService() {
     return { message: "✅ Logged out successfully" };
   }
 
-  // Send OTP
+  // Send OTP to email for registration or password reset
   static async sendOTP(email) {
     if (!email) throw new Error("Email is required");
 
@@ -123,16 +179,15 @@ static async updateUser(userId, data) {
 
     return {
       otp,
-      previewURL: info?.previewURL || null,
+      previewURL: info?.previewURL || null, // Optional: preview URL for email content
     };
   }
 
-  // Resend OTP (with 5 attempts limit)
+  // Resend OTP (with limit of 3 attempts)
   static async resendOTP(email) {
     const user = await User.findOne({ email });
     if (!user) throw new Error("User not found");
-    if (user.isBlocked)
-      throw new Error("Account blocked due to too many OTP requests");
+    if (user.isBlocked) throw new Error("Account blocked due to too many OTP requests");
 
     if (user.otpResendCount >= 3) {
       user.isBlocked = true;
@@ -156,7 +211,7 @@ static async updateUser(userId, data) {
     };
   }
 
-  // Change Password - (Old to New )
+  // Change password (old to new)
   static async changePasswordService(userId, oldPassword, newPassword) {
     const user = await User.findById(userId);
     if (!user) throw new Error("User not found");
@@ -168,12 +223,11 @@ static async updateUser(userId, data) {
     await user.save();
   }
 
-  // Request Reset OTP (Send OTP to email)
+  // Request password reset OTP
   static async requestPasswordReset(email) {
     const user = await User.findOne({ email });
     if (!user) throw new Error("User not found");
-    if (user.isBlocked)
-      throw new Error("Account blocked due to too many OTP requests");
+    if (user.isBlocked) throw new Error("Account blocked due to too many OTP requests");
 
     const otp = generateOTP();
     user.otp = otp;
@@ -190,8 +244,7 @@ static async updateUser(userId, data) {
   static async resetPasswordWithOTP(email, otp, newPassword) {
     const user = await User.findOne({ email });
     if (!user) throw new Error("User not found");
-    if (user.isBlocked)
-      throw new Error("Account blocked due to too many OTP requests");
+    if (user.isBlocked) throw new Error("Account blocked due to too many OTP requests");
 
     if (user.otp !== otp) throw new Error("Invalid or expired OTP");
 
@@ -203,14 +256,15 @@ static async updateUser(userId, data) {
     return { message: "Password reset successful" };
   }
 
-  // Logged In User Profile
+  // Get logged-in user's profile
   static async getUserProfile(userId) {
-    const user = await User.findById(userId).select("-password -otp"); // exclude sensitive
+    const user = await User.findById(userId).select("-password -otp"); // Exclude sensitive info
     if (!user) throw new Error("User not found");
     if (user.isBlocked) throw new Error("Your account is blocked");
     return user;
   }
 
+<<<<<<< HEAD
   // User profile update
 // Update Profile Service
 static async updateProfileService({ userId, updateData, requesterRoles }) {
@@ -248,6 +302,40 @@ static async updateUserRolesService(userId, roles) {
 
 
 
+=======
+  // Update profile for logged-in user
+  static async updateProfileService({ userId, updateData, requesterRoles }) {
+    console.log("🔧 updateProfileService called →", { userId, updateData, requesterRoles });
+
+    const user = await User.findById(userId);
+    if (!user) throw new Error("User not found");
+
+    // Apply changes
+    Object.assign(user, updateData);
+    await user.save();
+
+    return user.toObject();
+  }
+
+  // Admin-only: Update roles of a user
+  static async updateUserRolesService(userId, roles) {
+    const user = await User.findById(userId);
+    if (!user) throw new Error("User not found");
+
+    // Update user roles
+    user.roles = roles;
+    await user.save();
+
+    return {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      avatar: user.avatar,
+      roles: user.roles,
+      isVerified: user.isVerified,
+    };
+  }
+>>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
 }
 
 export default UserService;
