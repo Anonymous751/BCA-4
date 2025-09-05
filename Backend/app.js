@@ -18,6 +18,7 @@ import blogRoutes from "../Backend/myapp/domains/blogs/routes/blog.route.js";
 import commentRoutes from "../Backend/myapp/domains/comments/routes/comment.route.js";
 import likeRoutes from "../Backend/myapp/domains/likes/routes/likes.route.js";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import {connectDB} from "./config/db.config.js";
 import fileRoutes from "./routes/file.route.js";
 
@@ -25,12 +26,17 @@ import fileRoutes from "./routes/file.route.js";
 import fileRoutes from "./routes/file.route.js";
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
 
+=======
+import fileRoutes from "./routes/file.route.js";
+
+>>>>>>> 68ee815 (AlMost-85)
 // 4. App Initialization
 const app = express();
 
 // __dirname replacement in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+<<<<<<< HEAD
 <<<<<<< HEAD
 connectDB()
 app.use(cors({
@@ -52,6 +58,9 @@ app.use("/api/files", fileRoutes);
 // catch 404 and forward to error handler
 =======
 
+=======
+
+>>>>>>> 68ee815 (AlMost-85)
 // 5. Database Connection
 connectDB();
 
@@ -77,7 +86,10 @@ app.use("/api/likes", likeRoutes);
 app.use("/api/files", fileRoutes);
 
 // 8. 404 Error Handling (Route Not Found)
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
 app.use((req, res, next) => {
   next(createError(404));  // Forward to error handler
 });

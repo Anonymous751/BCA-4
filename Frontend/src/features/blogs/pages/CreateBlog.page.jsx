@@ -2,10 +2,14 @@ import { useState } from "react";
 import JoditEditor from "jodit-react";
 import { motion } from "framer-motion";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { FaPenFancy, FaTags, FaSave } from "react-icons/fa";
 =======
 import { FaPenFancy, FaTags, FaSave, FaImage } from "react-icons/fa";
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+import { FaPenFancy, FaTags, FaSave, FaImage } from "react-icons/fa";
+>>>>>>> 68ee815 (AlMost-85)
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,15 +19,21 @@ export default function CreateBlogPage() {
   const [tags, setTags] = useState("");
   const [description, setDescription] = useState("");
 <<<<<<< HEAD
+<<<<<<< HEAD
   const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem("token"); // assuming token is stored here
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
   const [coverImage, setCoverImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem("token");
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
 
   const handleCreateBlog = async (status) => {
     if (!title || !description) {
@@ -33,6 +43,7 @@ export default function CreateBlogPage() {
 
     try {
       setLoading(true);
+<<<<<<< HEAD
 <<<<<<< HEAD
       const res = await axios.post(
         "http://localhost:1551/api/blogs/create-blog",
@@ -49,6 +60,8 @@ export default function CreateBlogPage() {
         }
       );
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
       const formData = new FormData();
       formData.append("title", title);
       formData.append("tags", JSON.stringify(tags.split(",").map((t) => t.trim())));
@@ -62,16 +75,23 @@ export default function CreateBlogPage() {
           "Content-Type": "multipart/form-data",
         },
       });
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
 
       toast.success("Blog created successfully!");
       setTitle("");
       setTags("");
       setDescription("");
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       setCoverImage(null);
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+      setCoverImage(null);
+>>>>>>> 68ee815 (AlMost-85)
     } catch (err) {
       console.error(err.response?.data || err);
       toast.error(err.response?.data?.error || "Failed to create blog");
@@ -81,6 +101,7 @@ export default function CreateBlogPage() {
   };
 
   return (
+<<<<<<< HEAD
 <<<<<<< HEAD
     <div className="min-h-screen bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 flex justify-center items-start py-16 px-6">
       <ToastContainer position="top-right" autoClose={3000} />
@@ -117,11 +138,29 @@ export default function CreateBlogPage() {
         <div>
           <label className="block text-gray-700 font-medium mb-2">Blog Title</label>
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+    <div className="min-h-screen bg-gray-100 flex justify-center items-start py-16 px-6">
+      <ToastContainer position="top-right" autoClose={3000} />
+      <motion.div
+        className="w-full max-w-3xl bg-white rounded-xl shadow-lg p-8 space-y-6"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
+          <FaPenFancy className="text-indigo-500" /> Create New Blog
+        </h1>
+
+        {/* Title */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-2">Blog Title</label>
+>>>>>>> 68ee815 (AlMost-85)
           <input
             type="text"
             placeholder="Enter your blog title..."
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+<<<<<<< HEAD
 <<<<<<< HEAD
             className="w-full p-4 rounded-xl bg-white/80 focus:bg-white text-gray-800 outline-none border border-gray-200 shadow-md focus:ring-2 focus:ring-purple-400"
           />
@@ -132,6 +171,8 @@ export default function CreateBlogPage() {
           <label className="block text-white font-semibold mb-2 flex items-center gap-2">
             <FaTags /> Tags
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
             className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-400 outline-none"
           />
         </div>
@@ -140,13 +181,17 @@ export default function CreateBlogPage() {
         <div>
           <label className="block text-gray-700 font-medium mb-2 flex items-center gap-2">
             <FaTags className="text-pink-500" /> Tags
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
           </label>
           <input
             type="text"
             placeholder="e.g. React, Node, Tailwind"
             value={tags}
             onChange={(e) => setTags(e.target.value)}
+<<<<<<< HEAD
 <<<<<<< HEAD
             className="w-full p-4 rounded-xl bg-white/80 focus:bg-white text-gray-800 outline-none border border-gray-200 shadow-md focus:ring-2 focus:ring-pink-400"
           />
@@ -157,6 +202,8 @@ export default function CreateBlogPage() {
           <JoditEditor value={description} onChange={(newDesc) => setDescription(newDesc)} />
         </motion.div>
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
             className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-400 outline-none"
           />
         </div>
@@ -188,12 +235,16 @@ export default function CreateBlogPage() {
             <JoditEditor value={description} onChange={(newDesc) => setDescription(newDesc)} />
           </div>
         </div>
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
 
         {/* Buttons */}
         <div className="flex justify-end gap-4">
           <motion.button
             onClick={() => handleCreateBlog("draft")}
+<<<<<<< HEAD
 <<<<<<< HEAD
             whileHover={{ scale: 1.1 }}
             disabled={loading}
@@ -209,6 +260,8 @@ export default function CreateBlogPage() {
           >
             <FaPenFancy /> Publish
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
             whileHover={{ scale: 1.05 }}
             disabled={loading}
             className="px-6 py-2 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition"
@@ -223,7 +276,10 @@ export default function CreateBlogPage() {
             className="px-6 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition"
           >
             <FaPenFancy className="inline mr-2" /> Publish
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
           </motion.button>
         </div>
       </motion.div>

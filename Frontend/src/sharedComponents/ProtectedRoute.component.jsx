@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/auth.context";
 
@@ -18,6 +19,8 @@ const ProtectedRoute = ({ allowedRoles }) => {
 
 export default ProtectedRoute;
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
 // src/sharedComponents/ProtectedRoute.component.jsx
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/auth.context";
@@ -37,4 +40,7 @@ export default function ProtectedRoute({ allowedRoles, children }) {
 
   return children;
 }
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)

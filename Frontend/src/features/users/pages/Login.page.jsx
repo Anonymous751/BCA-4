@@ -11,10 +11,14 @@ import { useAuth } from "../../../context/auth.context";
 
 export default function LoginPage() {
 <<<<<<< HEAD
+<<<<<<< HEAD
     const { login } = useAuth();
 =======
   const { login } = useAuth();
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+  const { login } = useAuth();
+>>>>>>> 68ee815 (AlMost-85)
   const navigate = useNavigate();
 
   const validationSchema = Yup.object({
@@ -24,6 +28,7 @@ export default function LoginPage() {
 
   const handleLogin = async (values, { setSubmitting }) => {
     try {
+<<<<<<< HEAD
 <<<<<<< HEAD
       const res = await axios.post("http://localhost:1551/api/users/login", {
         email: values.email,
@@ -39,6 +44,8 @@ export default function LoginPage() {
       // ✅ Save user + token in AuthContext
       login(user, token);
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
       console.log("Logging in with:", values);
       const res = await axios.post("http://localhost:1551/api/users/login", values);
       console.log("API Response:", res.data);
@@ -52,12 +59,16 @@ export default function LoginPage() {
       localStorage.setItem("token", token);
       localStorage.setItem("userRoles", JSON.stringify(user.roles));
       localStorage.setItem("username", user.username);
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
 
       toast.success(res.data.message || "Login successful!");
 
       // Redirect based on role
       setTimeout(() => {
+<<<<<<< HEAD
 <<<<<<< HEAD
         if (user.role === "Admin") navigate("/admin/profile");
         else if (user.role === "Author") navigate("/author/profile");
@@ -67,6 +78,8 @@ export default function LoginPage() {
 
     } catch (err) {
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
         if (user.roles.includes("Admin")) navigate("/admin/dashboard");
         else if (user.roles.includes("Author")) navigate("/author/author-dashboard");
         else if (user.roles.includes("Reader")) navigate("/reader/blogs");
@@ -74,7 +87,10 @@ export default function LoginPage() {
       }, 500);
     } catch (err) {
       console.error("Login error:", err.response?.data || err.message);
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
       toast.error(err.response?.data?.error || "Login failed");
     } finally {
       setSubmitting(false);
@@ -104,9 +120,12 @@ export default function LoginPage() {
           {({ isSubmitting }) => (
             <Form className="space-y-6">
 <<<<<<< HEAD
+<<<<<<< HEAD
               {/* Email */}
 =======
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
               <div className="relative">
                 <FaEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 <Field type="email" name="email" placeholder="Email" className={inputClasses} />
@@ -114,9 +133,12 @@ export default function LoginPage() {
               </div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
               {/* Password */}
 =======
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
               <div className="relative">
                 <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 <Field type="password" name="password" placeholder="Password" className={inputClasses} />
@@ -124,9 +146,12 @@ export default function LoginPage() {
               </div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
               {/* Forgot password */}
 =======
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
               <div className="text-right">
                 <NavLink to="/generate-otp" className="text-sm text-indigo-600 hover:underline hover:text-purple-600 transition-all">
                   Forgot Password?
@@ -134,9 +159,12 @@ export default function LoginPage() {
               </div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
               {/* Submit Button */}
 =======
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
               <motion.button
                 type="submit"
                 disabled={isSubmitting}

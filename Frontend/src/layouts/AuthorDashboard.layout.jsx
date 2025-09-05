@@ -30,15 +30,20 @@ export default function AuthorDashboardLayout() {
         animate={{ x: 0 }}
         transition={{ duration: 0.4 }}
 <<<<<<< HEAD
+<<<<<<< HEAD
         className="w-64 bg-gradient-to-b from-purple-600 to-purple-800 text-white fixed h-full shadow-lg flex flex-col"
 =======
         className="w-64 bg-gradient-to-b from-purple-500 via-indigo-600 to-purple-800 text-white fixed h-full shadow-2xl flex flex-col rounded-r-2xl"
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+        className="w-64 bg-gradient-to-b from-purple-500 via-indigo-600 to-purple-800 text-white fixed h-full shadow-2xl flex flex-col rounded-r-2xl"
+>>>>>>> 68ee815 (AlMost-85)
       >
         <h2 className="text-2xl font-extrabold p-5 border-b border-white/30 tracking-wide">
           ✍️ Author Panel
         </h2>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         <nav className="mt-4 flex-1">
           {navItems.map((item) => (
@@ -58,6 +63,8 @@ export default function AuthorDashboardLayout() {
             onClick={() => navigate("/author/change-password")}
             className="flex items-center gap-2 w-full justify-center py-3 bg-yellow-500 hover:bg-yellow-600 rounded-md transition"
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
    <nav className="mt-6 flex-1 px-3 space-y-2">
   {navItems.map((item) => (
     <NavLink
@@ -80,7 +87,10 @@ export default function AuthorDashboardLayout() {
           <button
             onClick={() => navigate("/author/change-password")}
             className="flex items-center gap-2 w-full justify-center py-3 bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-gray-900 font-semibold rounded-lg shadow-md transition transform hover:scale-105"
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
           >
             <FaKey /> Change Password
           </button>
@@ -88,10 +98,14 @@ export default function AuthorDashboardLayout() {
           <button
             onClick={handleLogout}
 <<<<<<< HEAD
+<<<<<<< HEAD
             className="flex items-center gap-2 w-full justify-center py-3 bg-red-600 hover:bg-red-700 rounded-md transition"
 =======
             className="flex items-center gap-2 w-full justify-center py-3 bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 rounded-lg font-semibold shadow-md transition transform hover:scale-105"
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+            className="flex items-center gap-2 w-full justify-center py-3 bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 rounded-lg font-semibold shadow-md transition transform hover:scale-105"
+>>>>>>> 68ee815 (AlMost-85)
           >
             <FaSignOutAlt /> Logout
           </button>

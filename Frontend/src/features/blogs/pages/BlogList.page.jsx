@@ -5,6 +5,7 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 export default function BlogListPage() {
@@ -17,6 +18,10 @@ export default function BlogListPage() {
 =======
 import { FaEdit, FaTrash, FaEye, FaHeart, FaRegHeart } from "react-icons/fa";
 
+=======
+import { FaEdit, FaTrash, FaEye, FaHeart, FaRegHeart } from "react-icons/fa";
+
+>>>>>>> 68ee815 (AlMost-85)
 // Helper to truncate HTML content
 const truncateText = (html, maxLength = 100) => {
   const div = document.createElement("div");
@@ -41,7 +46,10 @@ export default function BlogListPage() {
   }, []);
 
   // Fetch blogs from backend
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
   useEffect(() => {
     const fetchBlogs = async () => {
       if (!token) {
@@ -53,13 +61,19 @@ export default function BlogListPage() {
       try {
         const res = await axios.get("http://localhost:1551/api/blogs/get-blogs", {
 <<<<<<< HEAD
+<<<<<<< HEAD
           headers: { Authorization: `Bearer ${token}` },
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
           headers: {
             Authorization: `Bearer ${token}`,
             "cache-control": "no-cache",
           },
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
         });
         setBlogs(res.data.blogs || []);
       } catch (err) {
@@ -74,6 +88,7 @@ export default function BlogListPage() {
   }, [token]);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   // Delete blog
   const handleDelete = async (blogId) => {
     if (!token) {
@@ -82,6 +97,8 @@ export default function BlogListPage() {
     }
 
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
   // Toggle favourite status
   const toggleFavourite = (blogId) => {
     setFavourites((prev) => {
@@ -95,7 +112,10 @@ export default function BlogListPage() {
 
   const handleDelete = async (blogId) => {
     if (!token) return toast.error("Unauthorized. Please login.");
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
     if (!window.confirm("Are you sure you want to delete this blog?")) return;
 
     try {
@@ -103,10 +123,14 @@ export default function BlogListPage() {
         headers: { Authorization: `Bearer ${token}` },
       });
 <<<<<<< HEAD
+<<<<<<< HEAD
       setBlogs((prev) => prev.filter((blog) => blog._id !== blogId));
 =======
       setBlogs((prev) => prev.filter((b) => b._id !== blogId));
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+      setBlogs((prev) => prev.filter((b) => b._id !== blogId));
+>>>>>>> 68ee815 (AlMost-85)
       toast.success("Blog deleted successfully!");
     } catch (err) {
       console.error(err);
@@ -114,6 +138,7 @@ export default function BlogListPage() {
     }
   };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   // Navigate to Update page
   const handleUpdate = (blogId) => {
@@ -191,6 +216,36 @@ export default function BlogListPage() {
 =======
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogs.map((blog, index) => (
+=======
+  const handleUpdate = (blogId) => navigate(`/admin/blogs/update/${blogId}`);
+  const handleViewDetails = (blogId) => navigate(`/blogs/${blogId}`);
+
+  if (loading)
+    return (
+      <div className="flex justify-center items-center min-h-screen text-lg text-gray-600">
+        Loading blogs...
+      </div>
+    );
+
+  return (
+    <div className="min-h-screen bg-gray-100 mt-8 px-4 sm:px-6 lg:px-8">
+      <ToastContainer position="top-right" autoClose={3000} />
+      <motion.h1
+        className="text-4xl font-bold text-center mb-12 text-gray-800"
+        initial={{ opacity: 0, y: -40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        Blogs
+      </motion.h1>
+
+      {blogs.length === 0 ? (
+        <p className="text-center text-gray-500">No blogs found 🚀</p>
+      ) : (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {blogs.map((blog, index) => (
+            
+>>>>>>> 68ee815 (AlMost-85)
             <motion.div
               key={blog._id}
               className="relative rounded-xl bg-white shadow-md hover:shadow-xl transition p-6 flex flex-col justify-between"
@@ -216,13 +271,17 @@ export default function BlogListPage() {
                 <div className="flex flex-wrap gap-2 mb-3">
                   {blog.tags?.map((tag, i) => (
                     <span key={i} className="px-2 py-1 text-xs rounded-full bg-gray-200 text-gray-700">
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
                       #{tag}
                     </span>
                   ))}
                 </div>
               </div>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
               <div className="flex justify-end gap-2 mt-4">
                 <motion.button
@@ -240,6 +299,8 @@ export default function BlogListPage() {
                   <FaTrash /> Delete
                 </motion.button>
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
               <div className="flex justify-center mt-4 gap-2">
                 <motion.button
                   whileTap={{ scale: 0.95 }}
@@ -268,7 +329,10 @@ export default function BlogListPage() {
                     </motion.button>
                   </>
                 )}
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
               </div>
             </motion.div>
           ))}

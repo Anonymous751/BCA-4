@@ -36,28 +36,38 @@ export default function Sidebar({ role }) {
       </div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       {/* 🔹 Change Password Button */}
       <div className="mt-6">
         <button
           onClick={() => setIsModalOpen(true)}
           className="w-full bg-blue-600 text-white py-2 px-3 rounded hover:bg-blue-700"
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
       {/* Footer - Change Password */}
       <div className="mt-6">
         <button
           onClick={() => setIsModalOpen(true)}
           className="w-full py-2 px-3 rounded-xl font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md hover:from-blue-700 hover:to-indigo-700 transition"
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
         >
           Change Password
         </button>
       </div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       {/* 🔹 Modal */}
 =======
       {/* Change Password Modal */}
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+      {/* Change Password Modal */}
+>>>>>>> 68ee815 (AlMost-85)
       <ChangePasswordModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

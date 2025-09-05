@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { getGFS } from "../config/db.config.js";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 export const getCoverImage = async (req, res) => {
   try {
     const gfsBucket = getGFS();
@@ -14,6 +15,8 @@ export const getCoverImage = async (req, res) => {
     const files = await gfsBucket.find({ _id }).toArray();
     if (!files || files.length === 0) {
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
 const getCoverImage = async (req, res) => {
   try {
     const gfsBucket = getGFS();
@@ -45,11 +48,15 @@ const getCoverImage = async (req, res) => {
 
     if (!files || files.length === 0) {
       console.warn("⚠️ No file found for ID:", id);
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
       return res.status(404).json({ error: "Cover image not found" });
     }
 
     const file = files[0];
+<<<<<<< HEAD
 <<<<<<< HEAD
     res.set("Content-Type", file.contentType);
 
@@ -61,6 +68,8 @@ const getCoverImage = async (req, res) => {
   }
 };
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
     console.log("✅ Serving file:", {
       filename: file.filename,
       contentType: file.contentType,
@@ -83,4 +92,7 @@ const getCoverImage = async (req, res) => {
 };
 
 export default getCoverImage;
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)

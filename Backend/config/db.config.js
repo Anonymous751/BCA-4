@@ -6,10 +6,14 @@ let gfsBucket; // store GridFS bucket instance
 
 const connectDB = async () => {
   try {
+<<<<<<< HEAD
     const conn = await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
+=======
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+>>>>>>> 68ee815 (AlMost-85)
 
     console.log("✅ MongoDB Connected");
 

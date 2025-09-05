@@ -3,7 +3,6 @@ import Blog from "../models/blog.model.js";
 import mongoose from "mongoose";
 
 class BlogService {
-
   // Create a new blog
   static async createBlogService(data) {
     const blog = await Blog.create(data);
@@ -11,7 +10,12 @@ class BlogService {
   }
 
   // Get all blogs with author info + pagination, sorting, filtering by tag
-  static async getAllBlogsService({ page = 1, limit = 10, sortBy = "createdAt", tags = [] }) {
+  static async getAllBlogsService({
+    page = 1,
+    limit = 10,
+    sortBy = "createdAt",
+    tags = [],
+  }) {
     const query = tags.length ? { tags: { $in: tags } } : {};
     const skip = (page - 1) * limit;
 
@@ -22,14 +26,14 @@ class BlogService {
           from: "users",
           localField: "author",
           foreignField: "_id",
-          as: "authorInfo"
-        }
+          as: "authorInfo",
+        },
       },
       { $unwind: "$authorInfo" },
       { $sort: { [sortBy]: -1 } },
       { $skip: skip },
       { $limit: parseInt(limit) },
-      { $project: { "authorInfo.password": 0, "authorInfo.otp": 0 } }
+      { $project: { "authorInfo.password": 0, "authorInfo.otp": 0 } },
     ]);
 
 
@@ -42,7 +46,8 @@ class BlogService {
 
   // Get single blog by ID with public comments and likes
   static async getBlogByIdService(blogId) {
-    if (!mongoose.Types.ObjectId.isValid(blogId)) throw new Error("Invalid blog ID");
+    if (!mongoose.Types.ObjectId.isValid(blogId))
+      throw new Error("Invalid blog ID");
 
     const blog = await Blog.aggregate([
       { $match: { _id: new mongoose.Types.ObjectId(blogId) } },
@@ -51,8 +56,8 @@ class BlogService {
           from: "users",
           localField: "author",
           foreignField: "_id",
-          as: "authorInfo"
-        }
+          as: "authorInfo",
+        },
       },
       { $unwind: "$authorInfo" },
 
@@ -68,8 +73,8 @@ class BlogService {
                 from: "users",
                 localField: "userId",
                 foreignField: "_id",
-                as: "userInfo"
-              }
+                as: "userInfo",
+              },
             },
             { $unwind: "$userInfo" },
             {
@@ -78,12 +83,12 @@ class BlogService {
                 createdAt: 1,
                 "userInfo._id": 1,
                 "userInfo.username": 1,
-                "userInfo.avatar": 1
-              }
-            }
+                "userInfo.avatar": 1,
+              },
+            },
           ],
-          as: "comments"
-        }
+          as: "comments",
+        },
       },
 
       // Likes count
@@ -92,18 +97,29 @@ class BlogService {
           from: "likes",
           let: { blogId: "$_id" },
           pipeline: [
-            { $match: { $expr: { $and: [{ $eq: ["$blogId", "$$blogId"] }, { $eq: ["$type", "Like"] }] } } },
-            { $count: "likeCount" }
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ["$blogId", "$$blogId"] },
+                    { $eq: ["$type", "Like"] },
+                  ],
+                },
+              },
+            },
+            { $count: "likeCount" },
           ],
-          as: "likesData"
-        }
+          as: "likesData",
+        },
       },
       {
         $addFields: {
-          likeCount: { $ifNull: [{ $arrayElemAt: ["$likesData.likeCount", 0] }, 0] }
-        }
+          likeCount: {
+            $ifNull: [{ $arrayElemAt: ["$likesData.likeCount", 0] }, 0],
+          },
+        },
       },
-      { $project: { likesData: 0 } }
+      { $project: { likesData: 0 } },
     ]);
 
     if (!blog || blog.length === 0) throw new Error("Blog not found");
@@ -133,7 +149,7 @@ class BlogService {
       throw new Error("Unauthorized to delete this blog");
     }
 
-   await Blog.findByIdAndDelete(blogId);
+    await Blog.findByIdAndDelete(blogId);
     return { message: "Blog deleted successfully" };
   }
 

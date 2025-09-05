@@ -1,6 +1,6 @@
-// src/sharedComponents/Navbar.component.jsx
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+<<<<<<< HEAD
 import { menuConfig } from "../utils/menu.config";
 <<<<<<< HEAD
 import { FaUser, FaPlus, FaUsers, FaBlog, FaChevronDown } from "react-icons/fa";
@@ -10,6 +10,12 @@ import { FaUser, FaPlus, FaUsers, FaBlog, FaChevronDown, FaSignOutAlt } from "re
 import { motion } from "framer-motion";
 import { useAuth } from "../context/auth.context";
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+import { menuConfig } from "../utils/menu.config"; 
+import { FaChevronDown, FaSignOutAlt } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { useAuth } from "../context/auth.context";
+>>>>>>> 68ee815 (AlMost-85)
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,11 +34,9 @@ export default function Navbar() {
     { name: "Contact", path: "/contact-page" },
   ];
 
-  const iconMap = {
-    Profile: <FaUser className="inline-block mr-1" />,
-    "Create Blog": <FaPlus className="inline-block mr-1" />,
-    Users: <FaUsers className="inline-block mr-1" />,
-    Blogs: <FaBlog className="inline-block mr-1" />,
+  const handleLogout = () => {
+    logout();
+    navigate("/");
   };
 
   const handleLogout = () => {
@@ -41,6 +45,7 @@ export default function Navbar() {
   };
 
   return (
+<<<<<<< HEAD
     <nav className="bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg fixed w-full z-50">
 <<<<<<< HEAD
       <div className="container mx-auto px-16 py-4 flex items-center justify-between">
@@ -69,6 +74,24 @@ export default function Navbar() {
                 className={({ isActive }) =>
                   `transition-all duration-300 ${
                     isActive ? "text-yellow-300 font-extrabold" : "hover:text-pink-300"
+=======
+    <nav className="bg-gradient-to-r from-indigo-700 to-purple-700 shadow-md fixed w-full z-50 p-2">
+      <div className="container mx-auto px-4 md:px-10 py-3 flex items-center justify-between text-sm">
+        {/* Logo */}
+        <div className="text-lg font-bold text-yellow-300">BlogContent</div>
+
+        {/* Desktop Links */}
+        <ul className="hidden md:flex gap-6 items-center font-medium text-white">
+          {fixedLinks.map((link) => (
+            <li key={link.path}>
+              <NavLink
+                to={link.path}
+                className={({ isActive }) =>
+                  `px-2 py-1 transition ${
+                    isActive
+                      ? "text-yellow-300 border-b-2 border-yellow-300 font-semibold"
+                      : "hover:text-pink-300"
+>>>>>>> 68ee815 (AlMost-85)
                   }`
 =======
             <motion.li key={link.path} className="relative group text-white" whileHover={{ scale: 1.1 }}>
@@ -86,6 +109,7 @@ export default function Navbar() {
         </ul>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         {/* Right side: Account / Role-based */}
         <div className="hidden md:flex items-center gap-4 relative">
           {role === "Guest" ? (
@@ -95,11 +119,17 @@ export default function Navbar() {
           {isGuest ? (
             // Guest Mode
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+        {/* Right Side */}
+        <div className="hidden md:flex items-center gap-4">
+          {isGuest ? (
+>>>>>>> 68ee815 (AlMost-85)
             <div
               className="relative"
               onMouseEnter={() => setAccountOpen(true)}
               onMouseLeave={() => setAccountOpen(false)}
             >
+<<<<<<< HEAD
               <motion.button
                 className="flex items-center gap-1 bg-white text-indigo-700 px-4 py-2 rounded-md shadow hover:bg-yellow-200 transition-all"
                 whileHover={{ scale: 1.05 }}
@@ -117,13 +147,19 @@ export default function Navbar() {
                   <FaChevronDown />
                 </motion.span>
               </motion.button>
+=======
+              <button className="flex items-center gap-1 bg-white text-indigo-700 px-3 py-2 rounded-md font-medium hover:bg-yellow-200 transition">
+                Account
+                <FaChevronDown className="text-xs font-bold" />
+              </button>
+>>>>>>> 68ee815 (AlMost-85)
 
               {accountOpen && (
-                <ul className="absolute right-0 mt-2 bg-white rounded-md shadow-lg w-36 py-1 text-gray-700">
+                <ul className="absolute right-0 mt-1 bg-white rounded-md shadow-md w-32 py-1 text-xs font-medium text-gray-700">
                   <li>
                     <NavLink
                       to="/login"
-                      className="block px-4 py-2 hover:bg-indigo-100 hover:text-indigo-700 rounded transition-colors"
+                      className="block px-3 py-1 hover:bg-indigo-100"
                     >
                       Login
                     </NavLink>
@@ -131,7 +167,7 @@ export default function Navbar() {
                   <li>
                     <NavLink
                       to="/register"
-                      className="block px-4 py-2 hover:bg-indigo-100 hover:text-indigo-700 rounded transition-colors"
+                      className="block px-3 py-1 hover:bg-indigo-100"
                     >
                       Register
                     </NavLink>
@@ -140,6 +176,7 @@ export default function Navbar() {
               )}
             </div>
           ) : (
+<<<<<<< HEAD
 <<<<<<< HEAD
             roleLinks.map((link) => (
               <motion.div
@@ -192,6 +229,32 @@ export default function Navbar() {
               </motion.button>
             </>
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+            <>
+              {roleLinks.map((link) => (
+                <NavLink
+                  key={link.path}
+                  to={link.path}
+                  className={({ isActive }) =>
+                    `px-3 py-1 rounded-md transition ${
+                      isActive
+                        ? "bg-yellow-300 text-indigo-900 font-semibold"
+                        : "hover:bg-teal-400 hover:text-indigo-900 text-white"
+                    }`
+                  }
+                >
+                  {link.name}
+                </NavLink>
+              ))}
+
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-1 px-3 py-1 rounded-md bg-amber-400 hover:bg-amber-500 text-indigo-600 text-xs font-medium transition"
+              >
+                <FaSignOutAlt /> Logout
+              </button>
+            </>
+>>>>>>> 68ee815 (AlMost-85)
           )}
         </div>
 
@@ -199,8 +262,9 @@ export default function Navbar() {
 <<<<<<< HEAD
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden flex items-center text-white focus:outline-none"
+          className="md:hidden text-white"
         >
+<<<<<<< HEAD
 =======
         <button onClick={() => setIsOpen(!isOpen)} className="md:hidden flex items-center text-white focus:outline-none">
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
@@ -261,6 +325,11 @@ export default function Navbar() {
           )}
         </ul>
       )}
+=======
+          ☰
+        </button>
+      </div>
+>>>>>>> 68ee815 (AlMost-85)
     </nav>
   );
 }

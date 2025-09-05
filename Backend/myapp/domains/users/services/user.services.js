@@ -11,6 +11,7 @@ import { sendOTPEmail } from "../../../../helpers/email.helper.js";
 class UserService {
   // Register User
 <<<<<<< HEAD
+<<<<<<< HEAD
 static async registerUserService({ username, email, password, roles = ["Reader"], avatar = null }) {
   const existingUser = await User.findOne({ email });
   if (existingUser) throw new Error("User already exists with this email");
@@ -43,6 +44,8 @@ static async registerUserService({ username, email, password, roles = ["Reader"]
 
   // Verify OTP
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
   static async registerUserService({ username, email, password, roles = ["Reader"], avatar = null }) {
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -75,7 +78,10 @@ static async registerUserService({ username, email, password, roles = ["Reader"]
   }
 
   // Verify OTP during user registration or reset
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
   static async verifyOTPService({ email, otp }) {
     const user = await User.findOne({ email });
     if (!user) throw new Error("User not found");
@@ -116,6 +122,7 @@ static async registerUserService({ username, email, password, roles = ["Reader"]
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 // Get all user ?
 static async getAllUsersService() {
@@ -133,6 +140,8 @@ static async updateUser(userId, data) {
     const updatedUser = await User.findByIdAndUpdate(userId, data, {
       new: true, // return updated doc
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
   // Get all users
   static async getAllUsersService() {
     const users = await User.find().select("-password -otp"); // Exclude sensitive fields
@@ -148,7 +157,10 @@ static async updateUser(userId, data) {
   static async updateUser(userId, data) {
     const updatedUser = await User.findByIdAndUpdate(userId, data, {
       new: true,  // Return updated document
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
       runValidators: true,
     });
     return updatedUser;
@@ -160,12 +172,16 @@ static async updateUser(userId, data) {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
   // Logout User
 =======
   // Logout User (remove token)
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+  // Logout User (remove token)
+>>>>>>> 68ee815 (AlMost-85)
   static async logoutService() {
     return { message: "✅ Logged out successfully" };
   }
@@ -265,6 +281,7 @@ static async updateUser(userId, data) {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   // User profile update
 // Update Profile Service
 static async updateProfileService({ userId, updateData, requesterRoles }) {
@@ -307,6 +324,12 @@ static async updateUserRolesService(userId, roles) {
   static async updateProfileService({ userId, updateData, requesterRoles }) {
     console.log("🔧 updateProfileService called →", { userId, updateData, requesterRoles });
 
+=======
+  // Update profile for logged-in user
+  static async updateProfileService({ userId, updateData, requesterRoles }) {
+    console.log("🔧 updateProfileService called →", { userId, updateData, requesterRoles });
+
+>>>>>>> 68ee815 (AlMost-85)
     const user = await User.findById(userId);
     if (!user) throw new Error("User not found");
 
@@ -335,7 +358,10 @@ static async updateUserRolesService(userId, roles) {
       isVerified: user.isVerified,
     };
   }
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
 }
 
 export default UserService;

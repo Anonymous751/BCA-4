@@ -87,7 +87,10 @@ const cookieOptions = {
     secure: process.env.NODE_ENV === "production",
     sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
     maxAge: 24 * 60 * 60 * 1000, // 1 day
+<<<<<<< HEAD
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+>>>>>>> 68ee815 (AlMost-85)
 };
 
       // Verify OTP
@@ -98,6 +101,7 @@ const cookieOptions = {
                   return res.status(400).json({ error: "Email and OTP are required" });
               }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
               const user = await UserService.verifyOTPService({ email, otp });
 
@@ -128,6 +132,8 @@ static async login(req, res) {
     // Ensure roles array exists
     const userRoles = Array.isArray(user.roles) && user.roles.length ? user.roles : ["Reader"];
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
     // Register a new user
     static async registerUser(req, res) {
         try {
@@ -220,11 +226,14 @@ static async login(req, res) {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       // Logout User
       static async logout(req, res) {
           try {
               const { message } = await UserService.logoutService();
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
     // Login user and return token
     static async login(req, res) {
         try {
@@ -265,6 +274,13 @@ static async login(req, res) {
           }
       }
 =======
+            if (!user) {
+                return res.status(401).json({ error: "Invalid credentials" });
+            }
+
+            // Ensure roles array exists
+            const userRoles = Array.isArray(user.roles) && user.roles.length ? user.roles : ["Reader"];
+
             if (!user) {
                 return res.status(401).json({ error: "Invalid credentials" });
             }
@@ -355,6 +371,7 @@ static async login(req, res) {
       return res.status(401).json({ error: "Unauthorized: No user in token" });
     }
 
+<<<<<<< HEAD
     const user = await UserService.getUserProfile(req.user.id);
     if (!user) {
       return res.status(404).json({ error: "User not found in DB" });
@@ -497,6 +514,8 @@ static async getDashboardStats(req, res) {
 
   export default UserController;
 =======
+=======
+>>>>>>> 68ee815 (AlMost-85)
     // Resend OTP to the user
     static async resendOTP(req, res) {
         try {
@@ -728,5 +747,9 @@ export default UserController;
 
 // Dashboard Stats (getDashboardStats)
 
+<<<<<<< HEAD
 // Update User Roles (Admin) (updateUserRoles)
 >>>>>>> d096c23 (Almost All Admin,2-3 Author, ! Reader Notification)
+=======
+// Update User Roles (Admin) (updateUserRoles)
+>>>>>>> 68ee815 (AlMost-85)
